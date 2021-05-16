@@ -1,12 +1,12 @@
 <template>
-    <v-row style="background-color: #5a9698">
+    <v-row style="background-color: #5a9698" class="py-10">
         <v-col class="pa-0">
             <v-snackbar :timeout="8000" v-model="snackbar" absolute top right rounded="pill" color="error" elevation="10"> 
                <v-row justify="center">{{snackbarMessage}}</v-row>
             </v-snackbar>
             <dialogTable :dialog="dialogDataTable" :studentsData="dataFromFile" :headers="headers" @closeDialogDataTable="closeDialogDataTable()" @goToSelectAttributes="goToSelectAttributes()" />
             <dialogAttributes :dialog="dialogSelectAttributes" :studentsData="dataFromFile" @closeDialogAttributes="closeDialogAttributes()" @backToDataTable="backToDataTable" @goToSetPercentages="goToSetPercentages"/>
-            <dialogSetPercentages :dialog="dialogSetPercentages" :studentsData="dataFromFile" @closeDialogSetPercentages="closeDialogSetPercentages()" @backToAttributes="backToAttributes" />
+            <dialogSetPercentages :dialog="dialogSetPercentages" :studentsData="dataFromFile" :categories="categories" @addCategory="addCategory" @deleteCategory="deleteCategory" @closeDialogSetPercentages="closeDialogSetPercentages()" @backToAttributes="backToAttributes" />
             <v-row justify="center" class="py-10"> Sube tu archivo para comenzar </v-row>
             <client-only>
                <v-row id="profile-pic-demo" justify="center">
@@ -54,6 +54,13 @@
                fields: []
             },
             headers: [],
+            categories: [
+               {
+                  name: '',
+                  attributes: [],
+                  percentage: 0
+               }
+            ]
          };
       },
       methods: {
@@ -138,6 +145,16 @@
             this.dialogSelectAttributes = true;
             this.dialogSetPercentages = false;
          },
+         addCategory() {
+            this.categories.push({
+               name: '',
+               attributes: [],
+               percentage: 0
+            })
+         },
+         deleteCategory(index) {
+            this.categories.splice(index, 1);
+         }
       },
    };
 </script>
