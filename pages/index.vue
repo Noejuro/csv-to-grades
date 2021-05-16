@@ -1,11 +1,12 @@
 <template>
-    <v-row>
+    <v-row style="background-color: #5a9698">
         <v-col class="pa-0">
             <v-snackbar :timeout="8000" v-model="snackbar" absolute top right rounded="pill" color="error" elevation="10"> 
                <v-row justify="center">{{snackbarMessage}}</v-row>
             </v-snackbar>
             <dialogTable :dialog="dialogDataTable" :studentsData="dataFromFile" :headers="headers" @closeDialogDataTable="closeDialogDataTable()" @goToSelectAttributes="goToSelectAttributes()" />
-            <dialogAttributes :dialog="dialogSelectAttributes" :studentsData="dataFromFile" @closeDialogAttributes="closeDialogAttributes()" @backToDataTable="backToDataTable" @setAttribute="setAttribute" />
+            <dialogAttributes :dialog="dialogSelectAttributes" :studentsData="dataFromFile" @closeDialogAttributes="closeDialogAttributes()" @backToDataTable="backToDataTable" @goToSetPercentages="goToSetPercentages"/>
+            <dialogSetPercentages :dialog="dialogSetPercentages" :studentsData="dataFromFile" @closeDialogSetPercentages="closeDialogSetPercentages()" @backToAttributes="backToAttributes" />
             <v-row justify="center" class="py-10"> Sube tu archivo para comenzar </v-row>
             <client-only>
                <v-row id="profile-pic-demo" justify="center">
@@ -35,9 +36,11 @@
 <script>
    import Papa from 'papaparse'
    import dialogTable from '@/components/dialogTable'
+   import dialogAttributes from '@/components/dialogAttributes'
+   import dialogSetPercentages from '@/components/dialogSetPercentages'
    export default {
       layout: 'main',
-      components: { dialogTable },
+      components: { dialogTable, dialogAttributes, dialogSetPercentages },
       data() {
          return {
             fileRecords: [],
@@ -45,6 +48,7 @@
             snackbarMessage: '',
             dialogDataTable: false,
             dialogSelectAttributes: false,
+            dialogSetPercentages: false,
             dataFromFile: {
                data: null,
                fields: []
@@ -114,17 +118,26 @@
             this.dialogSelectAttributes = false;
             this.fileRecords = [];
          },
+         closeDialogSetPercentages() {
+            this.dialogSetPercentages = false;
+            this.fileRecords = [];
+         },
          goToSelectAttributes() {
             this.dialogDataTable = false;
             this.dialogSelectAttributes = true;
          },
-         backToDataTable() {
-            this.dialogDataTable = true;
+         goToSetPercentages() {
             this.dialogSelectAttributes = false;
+            this.dialogSetPercentages = true;
          },
-         setAttribute(index) {
-            console.log("Selected Attribute: ", index)
-         }
+         backToDataTable() {
+            this.dialogSelectAttributes = false;
+            this.dialogDataTable = true;
+         },
+         backToAttributes() {
+            this.dialogSelectAttributes = true;
+            this.dialogSetPercentages = false;
+         },
       },
    };
 </script>
@@ -136,7 +149,7 @@
 <style>
    #profile-pic-demo .drop-help-text { display: none; }
    #profile-pic-demo .is-drag-over .drop-help-text { display: block; }
-   #profile-pic-demo .profile-pic-upload-block { border: 0; background-color: cadetblue; padding: 0; color: white; width: 90%; max-width: 600px; }
+   #profile-pic-demo .profile-pic-upload-block { border: 2px dashed white; background-color: cadetblue; padding: 0; color: white; width: 90%; max-width: 600px; }
    #profile-pic-demo .is-drag-over.profile-pic-upload-block { border-color: transparent; }
    #profile-pic-demo .vue-file-agent { width: 100%; float: left; border: 0; box-shadow: none; }
    .file-preview svg { fill: white !important; margin-top: 30% !important; height: 26% !important }

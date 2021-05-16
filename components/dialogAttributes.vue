@@ -2,9 +2,10 @@
     <v-dialog v-model="dialog" persistent max-width="1000">
         <v-card>
             <v-col class="blue2 pa-6">
-                <v-row justify="end">
-                    <v-col cols="4"> <v-row class="text-center" justify="center"> Selecciona todas las actividades o exámenes a considerar </v-row> </v-col>
-                    <v-col cols="4"> <v-row justify="end"> <v-icon medium color="black" @click="$emit('closeDialogAttributes')" style="cursor: pointer"> mdi-close </v-icon> </v-row> </v-col>
+                <v-row justify="center">
+                    <v-col cols="2"></v-col>
+                    <v-col cols="8"> <v-row class="text-center" justify="center"> Selecciona todas las actividades o exámenes a considerar </v-row> </v-col>
+                    <v-col cols="2"> <v-row justify="end"> <v-icon medium color="black" @click="$emit('closeDialogAttributes')" style="cursor: pointer"> mdi-close </v-icon> </v-row> </v-col>
                 </v-row>
                 <v-row class="py-4">
                     <v-chip v-for="(item, index) in attributes" class="ma-2" :class="(item.selected) ? 'enabled-chip' : 'disabled-chip' " :key="index" @click="setAttributeStatus(index)" :color="(item.selected) ? 'blue' : '' " >
@@ -13,6 +14,7 @@
                 </v-row>
                 <v-row justify="space-between">
                     <v-btn color="blue" plain @click="$emit('backToDataTable')">Regresar</v-btn>
+                    <v-btn color="success" @click="$emit('goToSetPercentages')">Continuar</v-btn>
                 </v-row>
             </v-col>
         </v-card>

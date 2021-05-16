@@ -2,9 +2,10 @@
     <v-dialog v-model="dialog" persistent max-width="1000">
         <v-card>
             <v-col class="blue2 pa-6">
-                <v-row justify="end">
-                    <v-col cols="4"> <v-row class="text-center" justify="center"> Estos son los alumnos que se han cargado desde el archivo </v-row> </v-col>
-                    <v-col cols="4"> <v-row justify="end"> <v-icon medium color="black" @click="$emit('closeDialogDataTable')" style="cursor: pointer"> mdi-close </v-icon> </v-row> </v-col>
+                <v-row justify="center">
+                    <v-col cols="2"></v-col>
+                    <v-col cols="8"> <v-row class="text-center" justify="center"> Estos son los alumnos que se han cargado desde el archivo </v-row> </v-col>
+                    <v-col cols="2"> <v-row justify="end"> <v-icon medium color="black" @click="$emit('closeDialogDataTable')" style="cursor: pointer"> mdi-close </v-icon> </v-row> </v-col>
                 </v-row>
                 <v-row justify="center" class="py-4">
                     <v-card style="width: 100%">
