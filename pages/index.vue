@@ -5,7 +5,7 @@
                <v-row justify="center">{{snackbarMessage}}</v-row>
             </v-snackbar>
             <dialogTable :dialog="dialogDataTable" :studentsData="dataFromFile" :headers="headers" @closeDialogDataTable="closeDialogDataTable()" @goToSelectAttributes="goToSelectAttributes()" />
-            <dialogAttributes :dialog="dialogSelectAttributes" :studentsData="dataFromFile" @closeDialogAttributes="closeDialogAttributes()" />
+            <dialogAttributes :dialog="dialogSelectAttributes" :studentsData="dataFromFile" @closeDialogAttributes="closeDialogAttributes()" @backToDataTable="backToDataTable" @setAttribute="setAttribute" />
             <v-row justify="center" class="py-10"> Sube tu archivo para comenzar </v-row>
             <client-only>
                <v-row id="profile-pic-demo" justify="center">
@@ -47,7 +47,7 @@
             dialogSelectAttributes: false,
             dataFromFile: {
                data: null,
-               fields: null
+               fields: []
             },
             headers: [],
          };
@@ -105,19 +105,26 @@
             if (process.env.NODE_ENV == 'development')
                console.log('HEADERS: ', headers)
             return headers;
-        },
-        closeDialogDataTable() {
-           this.dialogDataTable = false;
-           this.fileRecords = [];
-        },
-        closeDialogAttributes() {
-           this.dialogSelectAttributes = false;
-           this.fileRecords = [];
-        },
-        goToSelectAttributes() {
-           this.dialogDataTable = false;
-           this.dialogSelectAttributes = true;
-        }
+         },
+         closeDialogDataTable() {
+            this.dialogDataTable = false;
+            this.fileRecords = [];
+         },
+         closeDialogAttributes() {
+            this.dialogSelectAttributes = false;
+            this.fileRecords = [];
+         },
+         goToSelectAttributes() {
+            this.dialogDataTable = false;
+            this.dialogSelectAttributes = true;
+         },
+         backToDataTable() {
+            this.dialogDataTable = true;
+            this.dialogSelectAttributes = false;
+         },
+         setAttribute(index) {
+            console.log("Selected Attribute: ", index)
+         }
       },
    };
 </script>
