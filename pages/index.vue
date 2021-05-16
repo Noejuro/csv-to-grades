@@ -4,8 +4,9 @@
             <v-snackbar :timeout="8000" v-model="snackbar" absolute top right rounded="pill" color="error" elevation="10"> 
                <v-row justify="center">{{snackbarMessage}}</v-row>
             </v-snackbar>
-            <dialogTable :dialog="dialog" :studentsData="dataFromFile" :headers="headers" @closeDialog="closeDialog()" @goToSelectAttributes="goToSelectAttributes()" />
-            <v-row justify="center"> Upload your file </v-row>
+            <dialogTable :dialog="dialogDataTable" :studentsData="dataFromFile" :headers="headers" @closeDialogDataTable="closeDialogDataTable()" @goToSelectAttributes="goToSelectAttributes()" />
+            <dialogAttributes :dialog="dialogSelectAttributes" :studentsData="dataFromFile" @closeDialogAttributes="closeDialogAttributes()" />
+            <v-row justify="center" class="py-10"> Sube tu archivo para comenzar </v-row>
             <client-only>
                <v-row id="profile-pic-demo" justify="center">
                   <VueFileAgent
@@ -42,7 +43,8 @@
             fileRecords: [],
             snackbar: false,
             snackbarMessage: '',
-            dialog: false,
+            dialogDataTable: false,
+            dialogSelectAttributes: false,
             dataFromFile: {
                data: null,
                fields: null
@@ -63,7 +65,7 @@
                   complete: function (results) {
                         that.setData(results);
                         that.headers = that.getHeaders();
-                        that.dialog = true;
+                        that.dialogDataTable = true;
                   }
                });
             } else {
@@ -84,8 +86,13 @@
             if(!results.data[results.data.length - 1]['Dirección de correo'])
                results.data.splice(results.data.length - 1, 1);
 
+            var fields = [];
+
+            for(var i = 0; i < results.meta.fields.length; i++ )
+               fields.push({ name: results.meta.fields[i], selected: false })
+
             this.dataFromFile.data = results.data;
-            this.dataFromFile.fields = results.meta.fields;
+            this.dataFromFile.fields = fields;
 
             if (process.env.NODE_ENV == 'development')
                console.log("DATA FILE VUE: ", this.dataFromFile);
@@ -93,20 +100,23 @@
          getHeaders() {
             var headers = [];
             for(var i = 0; i < 3; i++ )
-                headers.push({ text: this.dataFromFile.fields[i], value: this.dataFromFile.fields[i] });
+                headers.push({ text: this.dataFromFile.fields[i].name, value: this.dataFromFile.fields[i].name });
 
             if (process.env.NODE_ENV == 'development')
                console.log('HEADERS: ', headers)
             return headers;
         },
-        closeDialog() {
-           this.dialog = false;
+        closeDialogDataTable() {
+           this.dialogDataTable = false;
+           this.fileRecords = [];
+        },
+        closeDialogAttributes() {
+           this.dialogSelectAttributes = false;
            this.fileRecords = [];
         },
         goToSelectAttributes() {
-           this.$router.push({ path: '/selecciona' });
-           this.dialog = false;
-           this.fileRecords = [];
+           this.dialogDataTable = false;
+           this.dialogSelectAttributes = true;
         }
       },
    };
