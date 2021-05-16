@@ -4,6 +4,7 @@
             <v-snackbar :timeout="8000" v-model="snackbar" absolute top right rounded="pill" color="error" elevation="10"> 
                <v-row justify="center">{{snackbarMessage}}</v-row>
             </v-snackbar>
+            <dialogTable :dialog="dialog" :studentsData="dataFromFile" :headers="headers" @closeDialog="closeDialog()" @goToSelectAttributes="goToSelectAttributes()" />
             <v-row justify="center"> Upload your file </v-row>
             <client-only>
                <v-row id="profile-pic-demo" justify="center">
@@ -26,27 +27,31 @@
                   </VueFileAgent>
                </v-row>
             </client-only>
-            <v-row justify="center">
-               Data {{ dataFromFile }}
-            </v-row>
         </v-col>
     </v-row>
 </template>
 
 <script>
    import Papa from 'papaparse'
+   import dialogTable from '@/components/dialogTable'
    export default {
       layout: 'main',
+      components: { dialogTable },
       data() {
          return {
             fileRecords: [],
             snackbar: false,
             snackbarMessage: '',
-            dataFromFile: null,
+            dialog: false,
+            dataFromFile: {
+               data: null,
+               fields: null
+            },
+            headers: [],
          };
       },
       methods: {
-         filesSelected: function (fileRecordsNewlySelected) {
+         filesSelected(fileRecordsNewlySelected) {
             if(this.fileRecords[0].ext == 'csv') {
                if (process.env.NODE_ENV == 'development')
                   console.log("File", this.fileRecords[0].file);
@@ -56,10 +61,9 @@
                Papa.parse(this.fileRecords[0].file, {
                   header: true,
                   complete: function (results) {
-                        console.log("DATA FILE: ", results);
-                        that.dataFromFile = results.data;
-                        that.fields = results.fields;
-                        console.log("DATA FILE VUE: ", that.dataFromFile);
+                        that.setData(results);
+                        that.headers = that.getHeaders();
+                        that.dialog = true;
                   }
                });
             } else {
@@ -68,12 +72,42 @@
                this.snackbarMessage = 'El archivo debe ser .CSV';
             }
          },
-         onBeforeDelete: function (fileRecord) {
-         this.fileRecords = [];
+         onBeforeDelete(fileRecord) {
+            this.fileRecords = [];
          },
-         fileDeleted: function (fileRecord) {
-         this.fileRecords = [];
+         fileDeleted(fileRecord) {
+            this.fileRecords = [];
          },
+         setData(results) {
+            if(results.data[0]['Dirección de correo'] == "" && results.data[1]['Dirección de correo'] == "" )
+               results.data.splice(0, 2);
+            if(!results.data[results.data.length - 1]['Dirección de correo'])
+               results.data.splice(results.data.length - 1, 1);
+
+            this.dataFromFile.data = results.data;
+            this.dataFromFile.fields = results.meta.fields;
+
+            if (process.env.NODE_ENV == 'development')
+               console.log("DATA FILE VUE: ", this.dataFromFile);
+         },
+         getHeaders() {
+            var headers = [];
+            for(var i = 0; i < 3; i++ )
+                headers.push({ text: this.dataFromFile.fields[i], value: this.dataFromFile.fields[i] });
+
+            if (process.env.NODE_ENV == 'development')
+               console.log('HEADERS: ', headers)
+            return headers;
+        },
+        closeDialog() {
+           this.dialog = false;
+           this.fileRecords = [];
+        },
+        goToSelectAttributes() {
+           this.$router.push({ path: '/selecciona' });
+           this.dialog = false;
+           this.fileRecords = [];
+        }
       },
    };
 </script>
