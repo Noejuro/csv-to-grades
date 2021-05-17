@@ -11,7 +11,7 @@
                     <v-col cols="6"  v-for="(item, index) in categories" :key="index" style="min-height: 200px;">
                         <v-row> <v-text-field required title="Este campo es requerido" v-model="item.name" background-color="#F5F5F5" shaped dense solo flat class="input-category" label="Nombre" /> </v-row>
                         <v-row>
-                            
+                            <v-select v-model="item.attributes" :items="setItems" item-text="name" item-value="name" chips label="Selecciona las actividades" multiple solo ></v-select>
                         </v-row>
                         <v-row align="center"> 
                             <v-text-field type="tel" id="telefono" maxlength="3" hide-details required title="Este campo es requerido" v-model="item.percentage" background-color="#F5F5F5" shaped dense solo flat class="input-category input-percentage" /> 
