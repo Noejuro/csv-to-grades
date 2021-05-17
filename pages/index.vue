@@ -58,7 +58,7 @@
                {
                   name: '',
                   attributes: [],
-                  percentage: 0
+                  percentage: '',
                }
             ]
          };
@@ -120,14 +120,17 @@
          closeDialogDataTable() {
             this.dialogDataTable = false;
             this.fileRecords = [];
+            this.categories = [{ name: '', attributes: [], percentage: '' }];
          },
          closeDialogAttributes() {
             this.dialogSelectAttributes = false;
             this.fileRecords = [];
+            this.categories = [{ name: '', attributes: [], percentage: '' }];
          },
          closeDialogSetPercentages() {
             this.dialogSetPercentages = false;
             this.fileRecords = [];
+            this.categories = [{ name: '', attributes: [], percentage: '' }];
          },
          goToSelectAttributes() {
             this.dialogDataTable = false;
@@ -144,12 +147,13 @@
          backToAttributes() {
             this.dialogSelectAttributes = true;
             this.dialogSetPercentages = false;
+            this.categories = [{ name: '', attributes: [], percentage: '' }];
          },
          addCategory() {
             this.categories.push({
                name: '',
                attributes: [],
-               percentage: 0
+               percentage: ''
             })
          },
          deleteCategory(index) {

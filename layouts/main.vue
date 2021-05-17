@@ -8,4 +8,5 @@
 
 <style>
     .row { margin: 0px !important; }
+    .border-bottom { border-bottom: 1px solid #4C4C4C; }
 </style>
