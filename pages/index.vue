@@ -169,27 +169,25 @@
             this.categories[index].averageCounter = this.categories[index].attributes.length;
          },
          setResults(testScore) {
-            console.log('DATA: ', this.categories)
-            var test = 0;
+            var score = 0;
             var average = 0;
             for( var category = 0; category < this.categories.length; category++ ) {
-                test = 0;
-                for(var attribute = 0; attribute < this.categories[category].attributes.length; attribute++) {
-                    console.log( parseFloat(this.dataFromFile.data[0][this.categories[category].attributes[attribute]] ))
-                    test += parseFloat(this.dataFromFile.data[0][this.categories[category].attributes[attribute]])
-                }
-                if(!this.categories[category].examen) {
-                  average = test / this.categories[category].averageCounter;
+               score = 0;
+               for(var attribute = 0; attribute < this.categories[category].attributes.length; attribute++) {
+                  score += parseFloat(this.dataFromFile.data[0][this.categories[category].attributes[attribute]])
+               }
+
+               if(!this.categories[category].examen) {
+                  average = score / this.categories[category].averageCounter;
                   if(average > 10)
                      average = 10;
-                   test = (average) * ( parseInt(this.categories[category].percentage) * 0.01);
-                }
-                else 
-                    test = ( (test * 10) / testScore ) * ( parseInt(this.categories[category].percentage) * 0.01);
+                  score = (average) * ( parseInt(this.categories[category].percentage) * 0.01);
+               }
+               else 
+                  score = ( (score * 10) / testScore ) * ( parseInt(this.categories[category].percentage) * 0.01);
 
-               test = Math.round(test * 10) / 10
-                    
-               console.log("Test: ", test)
+               score = Math.round(score * 10) / 10
+               console.log('Score: ', score)
             }
          }
       },
