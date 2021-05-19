@@ -116,9 +116,6 @@
             var headers = [];
             for(var i = 0; i < 3; i++ )
                 headers.push({ text: this.dataFromFile.fields[i].name, value: this.dataFromFile.fields[i].name });
-
-            if (process.env.NODE_ENV == 'development')
-               console.log('HEADERS: ', headers)
             return headers;
          },
          closeDialogDataTable() {
@@ -171,28 +168,49 @@
          setResults(testScore) {
             var score = 0;
             var average = 0;
-            var i = 0;
-            for( var category = 0; category < this.categories.length; category++ ) {
+            var student = 0;
+            var finalScore = 0;
+            var activity = 0;
+            for(var student = 0; student < this.dataFromFile.data.length; student++) {
+               finalScore = 0;
+               for( var category = 0; category < this.categories.length; category++ ) {
+                  score = 0;
+                  for(var attribute = 0; attribute < this.categories[category].attributes.length; attribute++) {
+                     activity = this.dataFromFile.data[student][this.categories[category].attributes[attribute]];
+                     if(activity == "")
+                        activity = 0;
+                     score += parseFloat( activity );
+                  }
 
-               score = 0;
-               for(var attribute = 0; attribute < this.categories[category].attributes.length; attribute++) {
-                  score += parseFloat(this.dataFromFile.data[i][this.categories[category].attributes[attribute]])
+                  if(!this.categories[category].examen) {
+                     average = score / this.categories[category].averageCounter;
+                     if(average > 10)
+                        average = 10;
+                     score = (average) * ( parseInt(this.categories[category].percentage) * 0.01);
+                  }
+                  else 
+                     score = ( (score * 10) / testScore ) * ( parseInt(this.categories[category].percentage) * 0.01);
+
+                  score = Math.round(score * 10) / 10 
+
+                  finalScore += score;
+                  this.dataFromFile.data[student][this.categories[category].name] = score;
                }
 
-               if(!this.categories[category].examen) {
-                  average = score / this.categories[category].averageCounter;
-                  if(average > 10)
-                     average = 10;
-                  score = (average) * ( parseInt(this.categories[category].percentage) * 0.01);
-               }
-               else 
-                  score = ( (score * 10) / testScore ) * ( parseInt(this.categories[category].percentage) * 0.01);
-
-               score = Math.round(score * 10) / 10 
-
-               this.dataFromFile.data[i][this.categories[category].name] = score;
+               if(finalScore < 5)
+                  finalScore = 5;
+                  
+               finalScore = Math.round(finalScore * 10) / 10 
+               this.dataFromFile.data[student]['Calif. Final'] = finalScore;
             }
-            console.log("Student: ", this.dataFromFile.data[i]);
+
+            for(var field = 0; field < this.categories.length; field++ ) {
+               this.dataFromFile.fields.push({ name: this.categories[field].name, selected: true })
+            }
+
+            this.dataFromFile.fields.push({ name: 'Calif. Final', selected: true })
+            
+            console.log("New Data: ", this.dataFromFile);
          }
       },
    };
