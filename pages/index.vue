@@ -6,7 +6,7 @@
             </v-snackbar>
             <dialogTable :dialog="dialogDataTable" :studentsData="dataFromFile" :headers="headers" @closeDialogDataTable="closeDialogDataTable()" @goToSelectAttributes="goToSelectAttributes()" />
             <dialogAttributes :dialog="dialogSelectAttributes" :studentsData="dataFromFile" @closeDialogAttributes="closeDialogAttributes()" @backToDataTable="backToDataTable" @goToSetPercentages="goToSetPercentages"/>
-            <dialogSetPercentages :dialog="dialogSetPercentages" :studentsData="dataFromFile" :categories="categories" @addCategory="addCategory" @deleteCategory="deleteCategory" @closeDialogSetPercentages="closeDialogSetPercentages()" @backToAttributes="backToAttributes" />
+            <dialogSetPercentages :dialog="dialogSetPercentages" :studentsData="dataFromFile" :categories="categories" @setResults="setResults" @setAverageCounter="setAverageCounter" @addCategory="addCategory" @deleteCategory="deleteCategory" @closeDialogSetPercentages="closeDialogSetPercentages()" @backToAttributes="backToAttributes" />
             <v-row justify="center" class="py-10"> Sube tu archivo para comenzar </v-row>
             <client-only>
                <v-row id="profile-pic-demo" justify="center">
@@ -59,6 +59,8 @@
                   name: '',
                   attributes: [],
                   percentage: '',
+                  examen: false,
+                  averageCounter: 0
                }
             ]
          };
@@ -105,6 +107,8 @@
             this.dataFromFile.data = results.data;
             this.dataFromFile.fields = fields;
 
+            this.dataFromFile.data.sort((a, b) => a.Apellidos.localeCompare(b.Apellidos))
+
             if (process.env.NODE_ENV == 'development')
                console.log("DATA FILE VUE: ", this.dataFromFile);
          },
@@ -120,17 +124,17 @@
          closeDialogDataTable() {
             this.dialogDataTable = false;
             this.fileRecords = [];
-            this.categories = [{ name: '', attributes: [], percentage: '' }];
+            this.categories = [{ name: '', attributes: [], percentage: '', examen: false, averageCounter: 0 }];
          },
          closeDialogAttributes() {
             this.dialogSelectAttributes = false;
             this.fileRecords = [];
-            this.categories = [{ name: '', attributes: [], percentage: '' }];
+            this.categories = [{ name: '', attributes: [], percentage: '', examen: false, averageCounter: 0 }];
          },
          closeDialogSetPercentages() {
             this.dialogSetPercentages = false;
             this.fileRecords = [];
-            this.categories = [{ name: '', attributes: [], percentage: '' }];
+            this.categories = [{ name: '', attributes: [], percentage: '', examen: false, averageCounter: 0 }];
          },
          goToSelectAttributes() {
             this.dialogDataTable = false;
@@ -147,17 +151,46 @@
          backToAttributes() {
             this.dialogSelectAttributes = true;
             this.dialogSetPercentages = false;
-            this.categories = [{ name: '', attributes: [], percentage: '' }];
+            this.categories = [{ name: '', attributes: [], percentage: '', examen: false, averageCounter: 0 }];
          },
          addCategory() {
             this.categories.push({
                name: '',
                attributes: [],
-               percentage: ''
+               percentage: '', 
+               examen: false, 
+               averageCounter: 0
             })
          },
          deleteCategory(index) {
             this.categories.splice(index, 1);
+         },
+         setAverageCounter(index) {
+            this.categories[index].averageCounter = this.categories[index].attributes.length;
+         },
+         setResults(testScore) {
+            console.log('DATA: ', this.categories)
+            var test = 0;
+            var average = 0;
+            for( var category = 0; category < this.categories.length; category++ ) {
+                test = 0;
+                for(var attribute = 0; attribute < this.categories[category].attributes.length; attribute++) {
+                    console.log( parseFloat(this.dataFromFile.data[0][this.categories[category].attributes[attribute]] ))
+                    test += parseFloat(this.dataFromFile.data[0][this.categories[category].attributes[attribute]])
+                }
+                if(!this.categories[category].examen) {
+                  average = test / this.categories[category].averageCounter;
+                  if(average > 10)
+                     average = 10;
+                   test = (average) * ( parseInt(this.categories[category].percentage) * 0.01);
+                }
+                else 
+                    test = ( (test * 10) / testScore ) * ( parseInt(this.categories[category].percentage) * 0.01);
+
+               test = Math.round(test * 10) / 10
+                    
+               console.log("Test: ", test)
+            }
          }
       },
    };
