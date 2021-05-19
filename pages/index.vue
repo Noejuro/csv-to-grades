@@ -171,10 +171,12 @@
          setResults(testScore) {
             var score = 0;
             var average = 0;
+            var i = 0;
             for( var category = 0; category < this.categories.length; category++ ) {
+
                score = 0;
                for(var attribute = 0; attribute < this.categories[category].attributes.length; attribute++) {
-                  score += parseFloat(this.dataFromFile.data[0][this.categories[category].attributes[attribute]])
+                  score += parseFloat(this.dataFromFile.data[i][this.categories[category].attributes[attribute]])
                }
 
                if(!this.categories[category].examen) {
@@ -186,9 +188,11 @@
                else 
                   score = ( (score * 10) / testScore ) * ( parseInt(this.categories[category].percentage) * 0.01);
 
-               score = Math.round(score * 10) / 10
-               console.log('Score: ', score)
+               score = Math.round(score * 10) / 10 
+
+               this.dataFromFile.data[i][this.categories[category].name] = score;
             }
+            console.log("Student: ", this.dataFromFile.data[i]);
          }
       },
    };
