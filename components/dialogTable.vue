@@ -46,10 +46,6 @@ export default {
             search: ''
         }
     },
-    created() {
-        if (process.env.NODE_ENV == 'development')
-            console.log("HEADERS: ", this.headers)
-    },
     methods: {
         
     }

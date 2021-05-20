@@ -65,6 +65,9 @@
             ]
          };
       },
+      mounted() {
+         localStorage.clear();
+      },
       methods: {
          filesSelected(fileRecordsNewlySelected) {
             if(this.fileRecords[0].ext == 'csv') {
@@ -77,6 +80,7 @@
                   header: true,
                   complete: function (results) {
                         that.setData(results);
+                        console.log(results)
                         that.headers = that.getHeaders();
                         that.dialogDataTable = true;
                   }
@@ -211,6 +215,9 @@
             this.dataFromFile.fields.push({ name: 'Calif. Final', selected: true })
             
             console.log("New Data: ", this.dataFromFile);
+            localStorage.setItem('StudentsData', JSON.stringify(this.dataFromFile));
+
+            this.$router.push({ path: 'result' });
          }
       },
    };
