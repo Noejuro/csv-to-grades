@@ -1,15 +1,15 @@
 <template>
     <v-row style="background-color: #5a9698" class="pb-10">
         <v-col class="pa-0">
-            <v-snackbar :timeout="8000" v-model="snackbar" absolute top right rounded="pill" color="error" elevation="10"> 
-               <v-row justify="center">{{snackbarMessage}}</v-row>
-            </v-snackbar>
             <dialogTable :dialog="dialogDataTable" :studentsData="dataFromFile" :headers="headers" @closeDialogDataTable="closeDialogDataTable()" @goToSelectAttributes="goToSelectAttributes()" />
             <dialogAttributes :dialog="dialogSelectAttributes" :studentsData="dataFromFile" @closeDialogAttributes="closeDialogAttributes()" @backToDataTable="backToDataTable" @goToSetPercentages="goToSetPercentages"/>
             <dialogSetPercentages :dialog="dialogSetPercentages" :studentsData="dataFromFile" :categories="categories" @setResults="setResults" @setAverageCounter="setAverageCounter" @addCategory="addCategory" @deleteCategory="deleteCategory" @closeDialogSetPercentages="closeDialogSetPercentages()" @backToAttributes="backToAttributes" />
             <v-row justify="center" class="py-10 FontBold Font-title white px-6 text-center" > <p class="mb-0" style="max-width: 800px; margin: 0 auto !important"> Para comenzar, sube tu archivo .CSV que descargaste de Google Classrom </p> </v-row>
             <client-only>
                <v-row id="profile-pic-demo" justify="center" class="pt-10">
+                  <v-snackbar :timeout="8000" v-model="snackbar" absolute top right rounded="lg" color="white" elevation="10" style="z-index: 1000000;"> 
+                     <v-row justify="center" class="FontBold Font-subtitle px-10" style="color: red">{{snackbarMessage}}</v-row>
+                  </v-snackbar>
                   <VueFileAgent
                      class="profile-pic-upload-block"
                      ref="profilePicRef"
@@ -228,6 +228,7 @@
 </style>
 
 <style>
+   #profile-pic-demo { position: relative }
    #profile-pic-demo .drop-help-text { display: none; }
    #profile-pic-demo .is-drag-over .drop-help-text { display: block; }
    #profile-pic-demo .profile-pic-upload-block { border: 2px dashed white; background-color: cadetblue; padding: 0; color: white; width: 90%; max-width: 600px; }
