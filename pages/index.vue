@@ -35,9 +35,9 @@
 
 <script>
    import Papa from 'papaparse'
-   import dialogTable from '@/components/dialogTable'
-   import dialogAttributes from '@/components/dialogAttributes'
-   import dialogSetPercentages from '@/components/dialogSetPercentages'
+   import dialogTable from '@/components/dialogs/dialogTable'
+   import dialogAttributes from '@/components/dialogs/dialogAttributes'
+   import dialogSetPercentages from '@/components/dialogs/dialogSetPercentages'
    export default {
       layout: 'main',
       components: { dialogTable, dialogAttributes, dialogSetPercentages },
@@ -72,7 +72,7 @@
          filesSelected(fileRecordsNewlySelected) {
             if(this.fileRecords[0].ext == 'csv') {
                if (process.env.NODE_ENV == 'development')
-                  console.log("File", this.fileRecords[0].file);
+                  console.log("File", this.fileRecords);
 
                var that = this;
 
