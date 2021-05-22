@@ -1,5 +1,5 @@
 <template>
-    <v-row style="background-color: #5a9698" class="py-10">
+    <v-row style="background-color: #5a9698" class="pb-10">
         <v-col class="pa-0">
             <v-snackbar :timeout="8000" v-model="snackbar" absolute top right rounded="pill" color="error" elevation="10"> 
                <v-row justify="center">{{snackbarMessage}}</v-row>
@@ -7,9 +7,9 @@
             <dialogTable :dialog="dialogDataTable" :studentsData="dataFromFile" :headers="headers" @closeDialogDataTable="closeDialogDataTable()" @goToSelectAttributes="goToSelectAttributes()" />
             <dialogAttributes :dialog="dialogSelectAttributes" :studentsData="dataFromFile" @closeDialogAttributes="closeDialogAttributes()" @backToDataTable="backToDataTable" @goToSetPercentages="goToSetPercentages"/>
             <dialogSetPercentages :dialog="dialogSetPercentages" :studentsData="dataFromFile" :categories="categories" @setResults="setResults" @setAverageCounter="setAverageCounter" @addCategory="addCategory" @deleteCategory="deleteCategory" @closeDialogSetPercentages="closeDialogSetPercentages()" @backToAttributes="backToAttributes" />
-            <v-row justify="center" class="py-10"> Sube tu archivo para comenzar </v-row>
+            <v-row justify="center" class="py-10 FontBold Font-title white px-6 text-center" > <p class="mb-0" style="max-width: 800px; margin: 0 auto !important"> Para comenzar, sube tu archivo .CSV que descargaste de Google Classrom </p> </v-row>
             <client-only>
-               <v-row id="profile-pic-demo" justify="center">
+               <v-row id="profile-pic-demo" justify="center" class="pt-10">
                   <VueFileAgent
                      class="profile-pic-upload-block"
                      ref="profilePicRef"
