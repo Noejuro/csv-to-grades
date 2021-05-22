@@ -1,7 +1,8 @@
 <template>
-    <v-row>
-        <v-col>
-            <v-row justify="center" class="py-4">
+    <v-row style="background-color: #5a9698">
+        <v-col class="pa-0">
+            <v-row justify="center" class="py-10 FontBold Font-title white px-6 text-center" > <p class="mb-0" style="max-width: 800px; margin: 0 auto !important"> A continuación puedes ver los resultados y descargarlos en tu computadora </p> </v-row>
+            <v-row justify="center" class="pa-4">
                 <client-only>
                     <a id="CSVFile"></a>
                     <v-card style="width: 100%">
@@ -26,8 +27,8 @@
                     </v-card>
                 </client-only>
             </v-row>
-            <v-row justify="center">
-                <v-btn block color="success" @click="downloadCSV()">Descargar Archivo</v-btn>
+            <v-row justify="center" class="px-4 pb-4">
+                <button @click="downloadCSV()" class="csv-btn-download" style="width: 100%"> Descargar Archivo </button>
             </v-row>
         </v-col>
     </v-row>
@@ -84,5 +85,5 @@ export default {
 </script>
 
 <style scoped>
-
+    
 </style>

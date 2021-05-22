@@ -4,7 +4,7 @@
             <dialogTable :dialog="dialogDataTable" :studentsData="dataFromFile" :headers="headers" @closeDialogDataTable="closeDialogDataTable()" @goToSelectAttributes="goToSelectAttributes()" />
             <dialogAttributes :dialog="dialogSelectAttributes" :studentsData="dataFromFile" @closeDialogAttributes="closeDialogAttributes()" @backToDataTable="backToDataTable" @goToSetPercentages="goToSetPercentages"/>
             <dialogSetPercentages :dialog="dialogSetPercentages" :studentsData="dataFromFile" :categories="categories" @setResults="setResults" @setAverageCounter="setAverageCounter" @addCategory="addCategory" @deleteCategory="deleteCategory" @closeDialogSetPercentages="closeDialogSetPercentages()" @backToAttributes="backToAttributes" />
-            <v-row justify="center" class="py-10 FontBold Font-title white px-6 text-center" > <p class="mb-0" style="max-width: 800px; margin: 0 auto !important"> Para comenzar, sube tu archivo .CSV que descargaste de Google Classrom </p> </v-row>
+            <v-row justify="center" class="py-10 FontBold Font-title white px-6 text-center" > <p class="mb-0" style="max-width: 800px; margin: 0 auto !important"> Para comenzar, sube tu archivo .CSV descargado de Google Classrom </p> </v-row>
             <client-only>
                <v-row id="profile-pic-demo" justify="center" class="pt-10">
                   <v-snackbar :timeout="8000" v-model="snackbar" absolute top right rounded="lg" color="white" elevation="10" style="z-index: 1000000;"> 

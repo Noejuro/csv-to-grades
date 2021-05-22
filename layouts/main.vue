@@ -41,20 +41,18 @@ export default {
     }
     .csv-btn:hover { background-color: cadetblue; }
 
-    .csv-btn-back {
-        background-color: white;
+    .csv-btn-download {
+        background-color: #463f57;
         border: none;
-        color: #002554;
-        padding: 10px 5px;
+        color: white;
+        padding: 8px 20px;
         text-align: center;
         text-decoration: none;
         outline: none;
         display: inline-block;
-        font-size: 16px;
+        font-size: 18px;
         cursor: pointer;
-        border-radius: 28px;
         transition: 0.5s;
-        height: 40px;
     }
 
      /* Importing Fonts */
