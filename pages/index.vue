@@ -4,6 +4,7 @@
             <dialogTable :dialog="dialogDataTable" :studentsData="dataFromFile" :headers="headers" @closeDialogDataTable="closeDialogDataTable()" @goToSelectAttributes="goToSelectAttributes()" />
             <dialogAttributes :dialog="dialogSelectAttributes" :studentsData="dataFromFile" @closeDialogAttributes="closeDialogAttributes()" @backToDataTable="backToDataTable" @goToSetPercentages="goToSetPercentages"/>
             <dialogSetPercentages :dialog="dialogSetPercentages" :studentsData="dataFromFile" :categories="categories" @setResults="setResults" @setAverageCounter="setAverageCounter" @addCategory="addCategory" @deleteCategory="deleteCategory" @closeDialogSetPercentages="closeDialogSetPercentages()" @backToAttributes="backToAttributes" />
+            
             <v-row justify="center" class="py-10 FontBold Font-title white px-6 text-center" > <p class="mb-0" style="max-width: 800px; margin: 0 auto !important"> Para comenzar, sube tu archivo .CSV descargado de Google Classrom </p> </v-row>
             <client-only>
                <v-row id="profile-pic-demo" justify="center" class="pt-10">
