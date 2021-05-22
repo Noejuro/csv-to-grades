@@ -8,10 +8,9 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: 'https://cdn.glitch.com/c9340de0-d9c1-4c8a-988c-2836b8426a55%2FDatos_Alterados__4_-removebg-preview.png?v=1621661162578' }
     ]
   },
 

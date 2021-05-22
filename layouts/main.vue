@@ -12,6 +12,12 @@
 import siteHeader from '@/components/header'
 import siteFooter from '@/components/footer'
 export default {
+  head: {
+      title: 'CSV a Calificación',
+      meta: [
+          { name: 'description', content: 'Web platform which can perform the calculations of all students in a dynamic, simple and personalized way in order to support teachers to reduce time to obtain grades.' },
+      ],
+  },
   components: { siteHeader, siteFooter }
 }
 </script>
