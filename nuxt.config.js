@@ -39,7 +39,7 @@ export default {
   build: {
   },
 
-  server: {
-    port: 8080 // default: 3000
-  }
+  // server: {
+  //   port: 8080 // default: 3000
+  // }
 }
