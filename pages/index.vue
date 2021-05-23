@@ -234,13 +234,15 @@
    #profile-pic-demo { position: relative }
    #profile-pic-demo .drop-help-text { display: none; }
    #profile-pic-demo .is-drag-over .drop-help-text { display: block; }
-   #profile-pic-demo .profile-pic-upload-block { border: 2px dashed white; background-color: cadetblue; padding: 0; color: white; width: 90%; max-width: 600px; }
+   #profile-pic-demo .profile-pic-upload-block { border: 6px dashed white; background-color: cadetblue; padding: 0; color: white; width: 90%;  }
    #profile-pic-demo .is-drag-over.profile-pic-upload-block { border-color: transparent; }
    #profile-pic-demo .vue-file-agent { width: 100%; float: left; border: 0; box-shadow: none; }
    .file-preview svg { fill: white !important; margin-top: 30% !important; height: 26% !important }
    .file-preview span { color: white !important; border-color: transparent; font-size: 25px !important; line-height: normal !important; height: auto !important; }
    .vue-file-agent .file-preview-new { padding: 0 !important; }
+   .vue-file-agent .file-preview-new svg { margin-top: 150px !important; }
    .vue-file-agent .file-preview .file-delete { top: 5px; right: 15px !important }
    .vue-file-agent .is-deletable .file-preview .file-name { padding-top: 10px }
+   .grid-block-wrapper .grid-block .file-preview { padding-bottom: 500px !important; }
 </style>
 
