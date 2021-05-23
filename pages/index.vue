@@ -104,6 +104,8 @@
             if(!results.data[results.data.length - 1]['Dirección de correo'])
                results.data.splice(results.data.length - 1, 1);
 
+            localStorage.setItem('FileName', this.fileRecords[0].file.name.slice(0, -4));
+
             var fields = [];
 
             for(var i = 0; i < results.meta.fields.length; i++ )

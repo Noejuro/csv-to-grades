@@ -28,7 +28,14 @@
                 </client-only>
             </v-row>
             <v-row justify="center" class="px-4 pb-4">
-                <button @click="downloadCSV()" class="csv-btn-download" style="width: 100%"> Descargar Archivo </button>
+                <v-col class="px-0">
+                    <v-row>
+                        <button @click="downloadCSV()" class="csv-btn-download" style="width: 100%; background-color: white; color: #463f57; font-size: 22px; font-family: 'font_bold' !important;"> Descargar Archivo </button>
+                    </v-row>
+                    <v-row class="pt-4">
+                        <button @click="$router.push({ path: '/' })" class="csv-btn-download" style="width: 100%; font-size: 16px"> Iniciar con otro archivo </button>
+                    </v-row>
+                </v-col>
             </v-row>
         </v-col>
     </v-row>
@@ -46,12 +53,15 @@ export default {
         }
     },
     mounted() {
-        this.studentsData = JSON.parse(localStorage.getItem('StudentsData'));
-        this.headers = this.getHeaders();
-        if (process.env.NODE_ENV == 'development') {
-            console.log("Students: ", this.studentsData)
-            console.log("Headers: ", this.headers)
-        }
+        if(localStorage.getItem('StudentsData')) {
+            this.studentsData = JSON.parse(localStorage.getItem('StudentsData'));
+            this.headers = this.getHeaders();
+            if (process.env.NODE_ENV == 'development') {
+                console.log("Students: ", this.studentsData)
+                console.log("Headers: ", this.headers)
+            }
+        } else 
+            this.$router.push({ path: '/' });
     },
     methods: {
         getHeaders() {
@@ -67,8 +77,7 @@ export default {
             csv = await Papa.unparse(this.studentsData, {  config: { header: true }  });
             let link = document.getElementById("CSVFile");
             link.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(csv));
-            link.setAttribute('download', 'calificaciones.csv');
-            console.log(document.getElementById("CSVFile"));
+            link.setAttribute('download', localStorage.getItem('FileName') + ' - Calificaciones' + '.csv');
             link.click();
         },
         removeAttributes() {
